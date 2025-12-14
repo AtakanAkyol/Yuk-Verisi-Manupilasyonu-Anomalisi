@@ -50,6 +50,15 @@ Bu projenin ve ele alınan anomalinin (Yük Manipülasyonu) güçlü, zayıf yö
 
 ## 📸 Ekran Görüntüleri (Kanıtlar)
 
-*(Buraya aldığınız ekran görüntülerini yükleyeceksiniz)*
-* **Resim 1:** Normal şarj akışı (3.6 kW)
-* **Resim 2:** Saldırı anı ve Merkezin Alarm vermesi (11.2 kW)
+### 1. Sistem Başlatıldı
+![Sistem Başlatıldı](1_Sistem_Baslatildi.png)
+
+### 2. Normal Durum
+![Normal Durum](2_Normal_Durum.png)
+![Normal Durum](3_Normal_Durum.png)
+
+### 3. Alarm Kanıtı
+![Saldırı Anı](4_Saldiri_Ani.png)
+
+### 4. Saldırı Anı
+![Alarm Kanıtı](5_Alarm_Kaniti.png)
