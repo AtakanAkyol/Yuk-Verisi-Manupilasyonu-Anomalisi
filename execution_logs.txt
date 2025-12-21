@@ -1,0 +1,71 @@
+PROJE ADI: Elektrikli Araç Şarj İstasyonu Yük Verisi Manipülasyonu Simülasyonu
+TARİH: 21 Aralık 2025
+TEST EDEN: Atakan Arda Akyol
+
+===============================================================
+BÖLÜM 1: MERKEZİ YÖNETİM SİSTEMİ (CSMS) LOGLARI
+(Burada sunucunun gelen verileri nasıl karşıladığı ve alarm verdiği görülmektedir.)
+===============================================================
+
+
+INFO:websockets.server:server listening on 0.0.0.0:9000
+------------------------------------------------
+ MERKEZİ YÖNETİM SİSTEMİ (CSMS) BAŞLATILDI
+ İstasyon bekleniyor...
+------------------------------------------------
+INFO:websockets.server:connection open
+INFO:ocpp:CP_1: receive message [2,"0696f0de-ee29-4638-b2be-0d26d5076ee2","BootNotification",{"chargePointModel":"Model-X","chargePointVendor":"Tesla-Similator"}]
+
+[MERKEZ] İstasyon Bağlantı İsteği Gönderdi.
+INFO:ocpp:CP_1: send [3,"0696f0de-ee29-4638-b2be-0d26d5076ee2",{"currentTime":"2025-12-21T12:26:14.236690","interval":10,"status":"Accepted"}]
+INFO:ocpp:CP_1: receive message [2,"3b2e5a99-3c42-4213-8807-c1a5391f8775","MeterValues",{"connectorId":1,"meterValue":[{"timestamp":"2023-12-14T10:00:00Z","sampledValue":[{"value":"3.6","unit":"kW"}]}]}]
+[MERKEZ] Veri Paketi Alındı.
+[MERKEZ] Okunan Güç: 3.6 kW
+INFO:ocpp:CP_1: send [3,"3b2e5a99-3c42-4213-8807-c1a5391f8775",{}]
+INFO:websockets.server:connection open
+INFO:ocpp:CP_1: receive message [2,"1fd48dd1-5b2d-4eb0-aa2a-8a3554b6e12d","BootNotification",{"chargePointModel":"Model-X","chargePointVendor":"Tesla-Similator"}]
+
+[MERKEZ] İstasyon Bağlantı İsteği Gönderdi.
+INFO:ocpp:CP_1: send [3,"1fd48dd1-5b2d-4eb0-aa2a-8a3554b6e12d",{"currentTime":"2025-12-21T12:26:56.850334","interval":10,"status":"Accepted"}]
+INFO:ocpp:CP_1: receive message [2,"8cc550dc-d428-4ab6-a2fb-9137305a5d2d","MeterValues",{"connectorId":1,"meterValue":[{"timestamp":"2023-12-14T10:05:00Z","sampledValue":[{"value":"11.2","unit":"kW"}]}]}]
+[MERKEZ] Veri Paketi Alındı.
+[MERKEZ] Okunan Güç: 11.2 kW
+
+🚨 🚨 🚨 ALARM! AŞIRI YÜK TESPİT EDİLDİ! 🚨 🚨 🚨
+!!! Sisteme Müdahale Ediliyor... !!!
+
+INFO:ocpp:CP_1: send [3,"8cc550dc-d428-4ab6-a2fb-9137305a5d2d",{}]
+
+
+
+===============================================================
+BÖLÜM 2: NORMAL İSTASYON LOGLARI
+(Burada normal bir istasyonun 3.6 kW güç gönderdiği anlar görülmektedir.)
+===============================================================
+
+INFO:ocpp:CP_1: send [2,"0696f0de-ee29-4638-b2be-0d26d5076ee2","BootNotification",{"chargePointModel":"Model-X","chargePointVendor":"Tesla-Similator"}]
+INFO:ocpp:CP_1: receive message [3,"0696f0de-ee29-4638-b2be-0d26d5076ee2",{"currentTime":"2025-12-21T12:26:14.236690","interval":10,"status":"Accepted"}]
+[İSTASYON] ✅ Merkez bağlantıyı kabul etti. Sistem hazır.
+[İSTASYON] Normal şarj işlemi simüle ediliyor...
+INFO:ocpp:CP_1: send [2,"3b2e5a99-3c42-4213-8807-c1a5391f8775","MeterValues",{"connectorId":1,"meterValue":[{"timestamp":"2023-12-14T10:00:00Z","sampledValue":[{"value":"3.6","unit":"kW"}]}]}]
+INFO:ocpp:CP_1: receive message [3,"3b2e5a99-3c42-4213-8807-c1a5391f8775",{}]
+[İSTASYON] 📤 Gönderilen Tüketim: 3.6 kW
+
+
+===============================================================
+BÖLÜM 3: SALDIRGAN LOGLARI
+(Burada saldırganın sisteme sızıp 11.2 kW sahte veri gönderdiği anlar görülmektedir.)
+===============================================================
+
+INFO:ocpp:CP_SALDIRGAN: send [2,"1fd48dd1-5b2d-4eb0-aa2a-8a3554b6e12d","BootNotification",{"chargePointModel":"Model-X","chargePointVendor":"Tesla-Similator"}]
+INFO:ocpp:CP_SALDIRGAN: receive message [3,"1fd48dd1-5b2d-4eb0-aa2a-8a3554b6e12d",{"currentTime":"2025-12-21T12:26:56.850334","interval":10,"status":"Accepted"}]
+
+[SALDIRGAN] 😈 Sisteme sızıldı. Merkez bizi normal istasyon sanıyor.
+
+--- ANOMALİ BAŞLATILIYOR ---
+[SALDIRGAN] ⚡ Manipüle edilmiş veri hazırlanıyor: 11.2 kW
+INFO:ocpp:CP_SALDIRGAN: send [2,"8cc550dc-d428-4ab6-a2fb-9137305a5d2d","MeterValues",{"connectorId":1,"meterValue":[{"timestamp":"2023-12-14T10:05:00Z","sampledValue":[{"value":"11.2","unit":"kW"}]}]}]
+INFO:ocpp:CP_SALDIRGAN: receive message [3,"8cc550dc-d428-4ab6-a2fb-9137305a5d2d",{}]
+[SALDIRGAN] 🚀 SAHTE VERİ MERKEZE ENJEKTE EDİLDİ: 11.2 kW
+
+[SALDIRGAN] Görev tamamlandı. İz kaybettiriliyor...
